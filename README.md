@@ -1,58 +1,34 @@
 # ReconLite
-Flask-based cybersecurity reconnaissance platform for automated passive and active scanning.
-Features
 
+ReconLite is a Flask-based cybersecurity reconnaissance platform designed to automate passive and active scanning tasks commonly used during security assessments and penetration testing activities.
 
-Passive reconnaissance
+## Features
 
+- Passive reconnaissance and information gathering
+- Active network scanning and service enumeration
+- Custom security scripts for different ports and services
+- SSH auditing using SSH-Audit
+- ExploitDB vulnerability integration
+- WHOIS and DNS analysis
+- Web-based dashboard interface
+- Integration with Shodan, Netlas, and SecurityTrails APIs
 
-Active network scanning
+## Technologies Used
 
+- Python
+- Flask
+- Nmap
+- Shodan API
+- Netlas API
+- SecurityTrails API
+- SSH-Audit
+- ExploitDB
+- HTML/CSS/JavaScript
 
-Port and service enumeration
+## Purpose
 
+The project was developed to simplify and automate reconnaissance workflows by combining multiple security tools and APIs into a single platform for faster and more organized security analysis.
 
-Custom security scripts for different ports and services
+## Disclaimer
 
-
-SSH auditing
-
-
-ExploitDB vulnerability integration
-
-
-WHOIS and DNS analysis
-
-
-Web-based dashboard interface
-
-
-Technologies Used
-
-
-Python
-
-
-Flask
-
-
-Nmap
-
-
-Shodan API
-
-
-Netlas API
-
-
-SecurityTrails API
-
-
-SSH-Audit
-
-
-ExploitDB
-
-
-Purpose
-ReconLite was developed to automate reconnaissance and information-gathering tasks commonly used during security assessments and penetration testing activities.
+This project was developed for educational and authorized security testing purposes only.
