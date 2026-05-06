@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}Passive Reconnaissance - ReconLite{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="reconnaissance-app">
+    <div class="container">
+        <!-- Professional Header -->
+        <header class="reconnaissance-header">
+            <div class="header-content">
+                <h1 class="page-title">Passive Reconnaissance</h1>
+                <p class="page-subtitle">Intelligence gathering through passive discovery methods</p>
+                <div class="capability-overview">
+                    <span class="capability-item">🌐 DNS & Domain Intelligence</span>
+                    <span class="capability-item">🔗 Subdomain Discovery</span>
+                    <span class="capability-item">📡 Service Detection</span>
+                    <span class="capability-item">⚡ Active Scan Integration</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Target Configuration Section -->
+        <section class="target-configuration">
+            <div class="config-card">
+                <div class="config-header">
+                    <h3 class="config-title">Target Configuration</h3>
+                    <div class="scan-status">
+                        <span class="status-dot ready"></span>
+                        <span class="status-text">Ready for Reconnaissance</span>
+                    </div>
+                </div>
+
+                <form id="reconForm" class="recon-form">
+                    <div class="input-section">
+                        <label for="targetInput" class="input-label">
+                            <span class="label-text">Target Domain or IP Range</span>
+                            <span class="label-hint">Enter domain name or IP range for passive discovery</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="text"
+                                   id="targetInput"
+                                   class="target-input"
+                                   placeholder="example.com or 192.168.1.0/24"
+                                   required>
+                            <div class="input-icon">🎯</div>
+                        </div>
+                        <div class="input-examples">
+                            <span class="example-item">💡 google.com</span>
+                            <span class="example-item">💡 192.168.1.100</span>
+                            <span class="example-item">💡 10.0.0.0/24</span>
+                        </div>
+                    </div>
+
+                    <div class="reconnaissance-preview">
+                        <h4 class="preview-title">Passive Discovery Profile</h4>
+                        <div class="discovery-methods">
+                            <div class="method-item">
+                                <span class="method-icon">✅</span>
+                                <div class="method-info">
+                                    <span class="method-name">DNS & Subdomain Enumeration</span>
+                                    <span class="method-detail">SecurityTrails API integration</span>
+                                </div>
+                            </div>
+                            <div class="method-item">
+                                <span class="method-icon">✅</span>
+                                <div class="method-info">
+                                    <span class="method-name">Service Discovery</span>
+                                    <span class="method-detail">Shodan & Netlas intelligence</span>
+                                </div>
+                            </div>
+                            <div class="method-item">
+                                <span class="method-icon">✅</span>
+                                <div class="method-info">
+                                    <span class="method-name">Domain Intelligence</span>
+                                    <span class="method-detail">WHOIS & registration data</span>
+                                </div>
+                            </div>
+                            <div class="method-item">
+                                <span class="method-icon">⏱️</span>
+                                <div class="method-info">
+                                    <span class="method-name">Estimated Duration</span>
+                                    <span class="method-detail">1-2 minutes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="recon-button" id="startReconBtn">
+
+                        <span class="btn-text">Start Passive Reconnaissance</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="progress-section hidden" id="progressSection">
+            <div class="progress-card">
+                <div class="progress-header">
+                    <div class="progress-info">
+                        <h3 class="progress-title">Passive Reconnaissance in Progress</h3>
+                        <div class="progress-stats">
+                            <span class="progress-message">Initializing discovery...</span>
+                            <span class="progress-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-visual">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="discovery-steps">
+                    <div class="step" data-step="validate">
+                        <div class="step-indicator">
+                            <div class="step-number">1</div>
+                        </div>
+                        <div class="step-content">
+                            <span class="step-name">Target Validation</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                    </div>
+                    <div class="step" data-step="dns">
+                        <div class="step-indicator">
+                            <div class="step-number">2</div>
+                        </div>
+                        <div class="step-content">
+                            <span class="step-name">DNS Intelligence</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                    </div>
+                    <div class="step" data-step="services">
+                        <div class="step-indicator">
+                            <div class="step-number">3</div>
+                        </div>
+                        <div class="step-content">
+                            <span class="step-name">Service Discovery</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                    </div>
+                    <div class="step" data-step="complete">
+                        <div class="step-indicator">
+                            <div class="step-number">4</div>
+                        </div>
+                        <div class="step-content">
+                            <span class="step-name">Analysis Complete</span>
+                            <span class="step-status">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section hidden" id="resultsSection">
+            <!-- Discovery Summary -->
+            <div class="discovery-summary">
+                <div class="summary-card services-summary">
+                    <div class="summary-header">
+                        <span class="summary-icon">🔍</span>
+                        <span class="summary-label">Services Discovered</span>
+                    </div>
+                    <div class="summary-value" id="servicesCount">0</div>
+                    <div class="summary-trend">Open ports detected</div>
+                </div>
+
+                <div class="summary-card dns-summary">
+                    <div class="summary-header">
+                        <span class="summary-icon">🌐</span>
+                        <span class="summary-label">DNS Records</span>
+                    </div>
+                    <div class="summary-value" id="dnsCount">0</div>
+                    <div class="summary-trend">Records enumerated</div>
+                </div>
+
+                <div class="summary-card subdomains-summary">
+                    <div class="summary-header">
+                        <span class="summary-icon">🔗</span>
+                        <span class="summary-label">Subdomains</span>
+                    </div>
+                    <div class="summary-value" id="subdomainsCount">0</div>
+                    <div class="summary-trend">Targets discovered</div>
+                </div>
+
+                <div class="summary-card status-summary">
+                    <div class="summary-header">
+                        <span class="summary-icon">⚡</span>
+                        <span class="summary-label">Active Scan Ready</span>
+                    </div>
+                    <div class="summary-value" id="activeScanCount">0</div>
+                    <div class="summary-trend">Ports available</div>
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            <div class="results-content">
+                <!-- Discovered Services Panel -->
+                <div class="result-panel services-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-section">
+                            <h3 class="panel-title">
+                                <span class="panel-icon">🔍</span>
+                                Discovered Services
+                            </h3>
+                            <span class="panel-subtitle">Open ports and running services with active scan capabilities</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="export-btn" onclick="exportServices()">
+                                <span class="btn-icon">📊</span>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content" id="servicesResults">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- DNS Intelligence Panel -->
+                <div class="result-panel dns-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-section">
+                            <h3 class="panel-title">
+                                <span class="panel-icon">🌐</span>
+                                DNS Intelligence
+                            </h3>
+                            <span class="panel-subtitle">Domain name system records and configuration</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="export-btn" onclick="exportDNS()">
+                                <span class="btn-icon">📊</span>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content" id="dnsResults">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Subdomain Discovery Panel -->
+                <div class="result-panel subdomains-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-section">
+                            <h3 class="panel-title">
+                                <span class="panel-icon">🔗</span>
+                                Subdomain Discovery
+                            </h3>
+                            <span class="panel-subtitle">Certificate transparency and passive enumeration</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="export-btn" onclick="exportSubdomains()">
+                                <span class="btn-icon">📊</span>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content" id="subdomainsResults">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Domain Information Panel -->
+                <div class="result-panel whois-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-section">
+                            <h3 class="panel-title">
+                                <span class="panel-icon">📋</span>
+                                Domain Information
+                            </h3>
+                            <span class="panel-subtitle">WHOIS registration and ownership data</span>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="export-btn" onclick="exportWhois()">
+                                <span class="btn-icon">📊</span>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-content" id="whoisResults">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Reconnaissance Summary Panel -->
+                <div class="result-panel summary-panel">
+                    <div class="panel-header">
+                        <div class="panel-title-section">
+                            <h3 class="panel-title">
+                                <span class="panel-icon">📊</span>
+                                Reconnaissance Summary
+                            </h3>
+                            <span class="panel-subtitle">Scan metadata and methodology overview</span>
+                        </div>
+                    </div>
+                    <div class="panel-content" id="summaryResults">
+                        <!-- Dynamic content populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Center -->
+            <div class="action-center">
+                <button class="action-btn secondary" onclick="startNewRecon()">
+                    <span class="btn-icon">🔄</span>
+                    New Reconnaissance
+                </button>
+                <button class="action-btn primary" id="bulkActiveScanBtn" onclick="launchBulkActiveScans()" style="display: none;">
+                    <span class="btn-icon">⚡</span>
+                    Launch Security Testing
+                </button>
+                <button class="action-btn accent" onclick="exportFullReport()">
+                    <span class="btn-icon">📋</span>
+                    Full Report
+                </button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Error Notification -->
+<div class="notification error hidden" id="errorNotification">
+    <div class="notification-content">
+        <span class="notification-icon">❌</span>
+        <div class="notification-message">
+            <span class="notification-title">Error</span>
+            <span class="notification-text" id="errorMessage">An error occurred</span>
+        </div>
+        <button class="notification-close" onclick="hideError()">×</button>
+    </div>
+</div>
+
+<!-- Success Notification -->
+<div class="notification success hidden" id="successNotification">
+    <div class="notification-content">
+        <span class="notification-icon">✅</span>
+        <div class="notification-message">
+            <span class="notification-title">Success</span>
+            <span class="notification-text" id="successMessage">Operation completed</span>
+        </div>
+        <button class="notification-close" onclick="hideSuccess()">×</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
